@@ -1,24 +1,3 @@
-function focusOnDraw()
-{
-  document.getElementById('btnDraw').focus();
-} // focusOnDraw()
-
-
-function goFullScreen()
-{
-  var elem = document.getElementById('mainContainer');
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.mozRequestFullScreen) { /* Firefox */
-    elem.mozRequestFullScreen();
-  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) { /* IE/Edge */
-    elem.msRequestFullscreen();
-  }
-}
-
-
 var app = angular.module('bingo_web', []);
 
 app.controller('controllerMain', function($scope, $sce, $window) {
@@ -223,9 +202,10 @@ app.controller('controllerMain', function($scope, $sce, $window) {
 
   // Pre-load filled ball images
   $scope.HTML_PRELOAD_IMAGES = Array.apply(null, Array($scope.NUMBER_BALLS))
-    .map(function (ball, index) {
-      return '<img src="images/1_' + padLeft(index + 1, 2).toString() + '.webp" alt="" />';
-    }).join('');
+    .map(function (ball, index)
+      {
+        return '<img src="images/1_' + padLeft(index + 1, 2).toString() + '.webp" alt="" />';
+      }).join('');
 
 
   $scope.renderHtml = function(htmlCode)
@@ -238,9 +218,40 @@ app.controller('controllerMain', function($scope, $sce, $window) {
 
       // Return a non-breaking space so that the div still contains some text to pad
       return '&#160;';
-    }; // renderHtml()
+  }; // renderHtml()
   
 }); // app.controller - controller
+
+
+function focusOnDraw()
+{
+  document.getElementById('btnDraw').focus();
+} // focusOnDraw()
+
+
+function goFullScreen()
+{
+  var elem = document.getElementById('mainContainer');
+  if (elem.requestFullscreen)
+  {
+    elem.requestFullscreen();
+  }
+  /* Firefox */
+  else if (elem.mozRequestFullScreen)
+  { 
+    elem.mozRequestFullScreen();
+  }
+  /* Chrome, Safari and Opera */
+  else if (elem.webkitRequestFullscreen) 
+  { 
+    elem.webkitRequestFullscreen();
+  }
+  /* IE/Edge */
+  else if (elem.msRequestFullscreen) 
+  { 
+    elem.msRequestFullscreen();
+  } // if fullscreen request
+} // goFullScreen()
 
 
 // https://stackoverflow.com/a/5367656  
