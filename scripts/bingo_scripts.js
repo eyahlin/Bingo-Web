@@ -224,7 +224,7 @@ app.controller('controllerMain', function($scope, $sce, $window) {
   // Pre-load filled ball images
   $scope.HTML_PRELOAD_IMAGES = Array.apply(null, Array($scope.NUMBER_BALLS))
     .map(function (ball, index) {
-      return '<img src="images/1_' + padLeft(index + 1, 2).toString() + '.png" alt="" />';
+      return '<img src="images/1_' + padLeft(index + 1, 2).toString() + '.webp" alt="" />';
     }).join('');
 
 
