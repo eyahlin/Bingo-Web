@@ -261,10 +261,49 @@ function padLeft(strToPad, n, strPadValue)
 }  // padLeft()
 
 
-// https://teamtreehouse.com/community/to-generate-a-random-number-between-0-and-20
 // Will return a number inside the given range, inclusive of both minimum and maximum
 // i.e. if min=0, max=20, returns a number from 0-20
 function getRandomInt(min, max) 
 {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  // Check if Web Crypto API is supported
+  if ((window.crypto) && (window.crypto.subtle))
+  {
+    return getSecureRandomInt(min, max);
+  }
+  else
+  {
+    return getPlainRandomInt(min, max);
+  } // if web crypto API is supported
 } // getRandomInt()
+
+
+
+// A cryptographically secure version using Crypto Web API
+function getSecureRandomInt(min, max)
+// Will return a number inside the given range, inclusive of both minimum and maximum
+// i.e. if min=0, max=20, returns a number from 0-20
+{
+  const range = max - min + 1;
+  const maxByte = 255;
+  // Use a multiple of the range to minimize bias
+  const limit = Math.floor(maxByte / range) * range;
+  
+  let randomByte;
+  let array = new Uint8Array(1);
+  
+  do
+  {
+    crypto.getRandomValues(array);
+    randomByte = array[0];
+  } while (randomByte >= limit); // Reject values that cause bias
+
+  return min + (randomByte % range);
+} // getSecureRandomInt()
+
+
+
+// Use plain vanilla Math.Random() js
+function getPlainRandomInt(min, max) 
+{
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+} // getPlainRandomInt()
